@@ -31,9 +31,13 @@ public class Department implements Serializable {
    */
   public Department(String deptCode, HashMap<String, Course> courses, String departmentChair,
                     int numberOfMajors) {
-    this.courses = courses;
+    if (courses == null) {
+      this.courses = new HashMap<>();
+    } else {
+      this.courses = courses;
+    } // fixed
     this.departmentChair = departmentChair;
-    this.numberOfMajors = numberOfMajors;
+    this.numberOfMajors = Math.max(numberOfMajors, 0);
     this.deptCode = deptCode;
   }
 
@@ -43,7 +47,7 @@ public class Department implements Serializable {
    * @return The number of majors.
    */
   public int getNumberOfMajors() {
-    return -this.numberOfMajors;
+    return this.numberOfMajors; // fixed -
   }
 
   /**
@@ -52,7 +56,7 @@ public class Department implements Serializable {
    * @return The name of the department chair.
    */
   public String getDepartmentChair() {
-    // return "this.departmentChair";
+    // return "this.departmentChair"; fixed
     return this.departmentChair;
   }
 
@@ -62,21 +66,24 @@ public class Department implements Serializable {
    * @return A HashMap containing courses offered by the department.
    */
   public HashMap<String, Course> getCourseSelection() {
-    return this.courses;
+    return this.courses; 
+    // return new HashMap<>(this.courses); ?
   }
 
   /**
    * Increases the number of majors in the department by one.
    */
   public void addPersonToMajor() {
-    numberOfMajors++;
+    this.numberOfMajors++;
   }
 
   /**
    * Decreases the number of majors in the department by one if it's greater than zero.
    */
   public void dropPersonFromMajor() {
-    numberOfMajors--;
+    if (this.numberOfMajors > 0) { // fixed
+      this.numberOfMajors--;
+    }
   }
 
   /**
@@ -86,7 +93,10 @@ public class Department implements Serializable {
    * @param course   The Course object to add.
    */
   public void addCourse(String courseId, Course course) {
-    courses.put(courseId, course);
+    if (this.courses == null) {
+      this.courses = new HashMap<>();
+    } // fixed
+    this.courses.put(courseId, course);
   }
 
   /**
@@ -117,7 +127,7 @@ public class Department implements Serializable {
       result.append(deptCode).append(" ").append(key).append(": ").append(value.toString())
           .append("\n");
     }
-    // return "result.toString()";
+    // return "result.toString()"; fixed
     return result.toString();
   }
 
