@@ -49,8 +49,8 @@ public class RouteController {
         return new ResponseEntity<>("Department Not Found", HttpStatus.NOT_FOUND); 
         // HttpStatus.OK fixed
       } else {
-        return new ResponseEntity<>(departmentMapping.get(deptCode.toUpperCase(Locale.ROOT)).toString(), 
-            HttpStatus.OK); // HttpStatus.NOT_FOUND fixed
+        return new ResponseEntity<>(departmentMapping.get(deptCode.toUpperCase(Locale.ROOT))
+          .toString(), HttpStatus.OK); // HttpStatus.NOT_FOUND fixed
       }
 
     } catch (Exception e) {
@@ -542,7 +542,8 @@ public class RouteController {
 
   private ResponseEntity<?> handleException(Exception e) {
     System.out.println(e.toString());
-    return new ResponseEntity<>("An Error has occurred", HttpStatus.INTERNAL_SERVER_ERROR); //fixed OK
+    return new ResponseEntity<>("An Error has occurred", 
+      HttpStatus.INTERNAL_SERVER_ERROR); //fixed OK
   }
 
 
