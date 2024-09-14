@@ -2,9 +2,9 @@ package dev.coms4156.project.individualproject;
 
 // import java.io.*;
 // import java.util.*;
-import java.io.File;
+// import java.io.File; fixed
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.HashMap; 
 import java.util.Map; 
 
 
@@ -16,7 +16,8 @@ import java.util.Map;
 public class Department implements Serializable {
 
   private static final long serialVersionUID = 234567L;
-  private HashMap<String, Course> courses;
+  // private HashMap<String, Course> courses;
+  private Map<String, Course> courses; // fixed
   private String departmentChair;
   private String deptCode;
   private int numberOfMajors;
@@ -25,14 +26,14 @@ public class Department implements Serializable {
    * Constructs a new Department object with the given parameters.
    *
    * @param deptCode         The code of the department.
-   * @param courses          A HashMap containing courses offered by the department.
+   * @param courses          A Map containing courses offered by the department.
    * @param departmentChair  The name of the department chair.
    * @param numberOfMajors   The number of majors in the department.
    */
-  public Department(String deptCode, HashMap<String, Course> courses, String departmentChair,
-                    int numberOfMajors) {
+  public Department(String deptCode, Map<String, Course> courses, String departmentChair,
+                    int numberOfMajors) { // fixed HashMap<String, Course>
     if (courses == null) {
-      this.courses = new HashMap<>();
+      this.courses = new HashMap<>(); // fixed HashMap
     } else {
       this.courses = courses;
     } // fixed
@@ -65,7 +66,7 @@ public class Department implements Serializable {
    *
    * @return A HashMap containing courses offered by the department.
    */
-  public HashMap<String, Course> getCourseSelection() {
+  public Map<String, Course> getCourseSelection() { //fixed HashMap
     return this.courses; 
     // return new HashMap<>(this.courses); ?
   }
@@ -94,7 +95,7 @@ public class Department implements Serializable {
    */
   public void addCourse(String courseId, Course course) {
     if (this.courses == null) {
-      this.courses = new HashMap<>();
+      this.courses = new HashMap<>(); // fixed HashMap
     } // fixed
     this.courses.put(courseId, course);
   }
@@ -119,6 +120,7 @@ public class Department implements Serializable {
    *
    * @return A string representing the department.
    */
+  @Override // fixed
   public String toString() {
     StringBuilder result = new StringBuilder();
     for (Map.Entry<String, Course> entry : courses.entrySet()) {

@@ -2,14 +2,14 @@ package dev.coms4156.project.individualproject;
 
 // import java.io.*;
 // import java.util.*;
-import java.io.File;
+// import java.io.File; fixed
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
-import java.util.List; 
+// import java.util.List; fixed
 import java.util.Map;
 
 /**
@@ -42,7 +42,7 @@ public class MyFileDatabase {
    *
    * @param mapping the mapping of department names to Department objects
    */
-  public void setMapping(HashMap<String, Department> mapping) {
+  public void setMapping(Map<String, Department> mapping) { // fixed
     this.departmentMapping = mapping;
   }
 
@@ -51,7 +51,7 @@ public class MyFileDatabase {
    *
    * @return the deserialized department mapping
    */
-  public HashMap<String, Department> deSerializeObjectFromFile() {
+  public Map<String, Department> deSerializeObjectFromFile() { //fixed
     try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filePath))) {
       Object obj = in.readObject();
       if (obj instanceof HashMap) {
@@ -84,7 +84,7 @@ public class MyFileDatabase {
    *
    * @return the department mapping
    */
-  public HashMap<String, Department> getDepartmentMapping() {
+  public Map<String, Department> getDepartmentMapping() { //fixed
     return this.departmentMapping;
   }
 
@@ -108,5 +108,5 @@ public class MyFileDatabase {
   private String filePath;
 
   /** The mapping of department names to Department objects. */
-  private HashMap<String, Department> departmentMapping;
+  private Map<String, Department> departmentMapping; //fixed
 }

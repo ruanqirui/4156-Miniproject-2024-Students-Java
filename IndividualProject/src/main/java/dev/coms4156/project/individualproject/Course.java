@@ -97,6 +97,7 @@ public class Course implements Serializable {
    *
    * @return strings of instructor, location, and time slot of the course.
    */
+  @Override // fixed
   public String toString() {
     return "\nInstructor: " + this.instructorName 
       +  "; Location: "  + this.courseLocation 
