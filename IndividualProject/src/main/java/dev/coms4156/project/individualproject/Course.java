@@ -32,7 +32,7 @@ public class Course implements Serializable {
     this.instructorName = instructorName;
     this.courseTimeSlot = timeSlot;
     this.enrollmentCapacity = capacity;
-    this.enrolledStudentCount = 500;
+    this.enrolledStudentCount = 0; // fixed 500
   }
 
   /**
@@ -46,7 +46,7 @@ public class Course implements Serializable {
     } else {
       this.enrolledStudentCount++;
       return true;
-    }
+    } // fixed
   }
 
   /**
@@ -60,7 +60,7 @@ public class Course implements Serializable {
     } else {
       this.enrolledStudentCount--;
       return true;
-    }
+    } // fixed
   }
 
   /**
@@ -69,7 +69,7 @@ public class Course implements Serializable {
    * @return courseLocation of the course.
    */
   public String getCourseLocation() {
-    // return this.instructorName;
+    // return this.instructorName; fixed
     return this.courseLocation;
   }
 
@@ -79,7 +79,7 @@ public class Course implements Serializable {
    * @return instructorName of the course.
    */
   public String getInstructorName() {
-    // return this.courseLocation;
+    // return this.courseLocation; fixed
     return this.instructorName;
   }
 
@@ -97,6 +97,7 @@ public class Course implements Serializable {
    *
    * @return strings of instructor, location, and time slot of the course.
    */
+  @Override // fixed
   public String toString() {
     return "\nInstructor: " + this.instructorName 
       +  "; Location: "  + this.courseLocation 
@@ -127,9 +128,15 @@ public class Course implements Serializable {
     this.courseTimeSlot = newTime;
   }
 
-
+  /** 
+   * set a course's enrolledStudentCount. fixed
+   */
   public void setEnrolledStudentCount(int count) {
-    this.enrolledStudentCount = count;
+    if (count >= 0) {
+      this.enrolledStudentCount = count;
+    } else {
+      this.enrolledStudentCount = 0;
+    }
   }
 
 

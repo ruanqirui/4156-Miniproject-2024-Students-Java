@@ -2,9 +2,9 @@ package dev.coms4156.project.individualproject;
 
 // import java.io.*;
 // import java.util.*;
-import java.io.File;
+// import java.io.File; fixed
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.HashMap; 
 import java.util.Map; 
 
 
@@ -16,7 +16,8 @@ import java.util.Map;
 public class Department implements Serializable {
 
   private static final long serialVersionUID = 234567L;
-  private HashMap<String, Course> courses;
+  // private HashMap<String, Course> courses;
+  private Map<String, Course> courses; // fixed
   private String departmentChair;
   private String deptCode;
   private int numberOfMajors;
@@ -25,15 +26,19 @@ public class Department implements Serializable {
    * Constructs a new Department object with the given parameters.
    *
    * @param deptCode         The code of the department.
-   * @param courses          A HashMap containing courses offered by the department.
+   * @param courses          A Map containing courses offered by the department.
    * @param departmentChair  The name of the department chair.
    * @param numberOfMajors   The number of majors in the department.
    */
-  public Department(String deptCode, HashMap<String, Course> courses, String departmentChair,
-                    int numberOfMajors) {
-    this.courses = courses;
+  public Department(String deptCode, Map<String, Course> courses, String departmentChair,
+                    int numberOfMajors) { // fixed HashMap<String, Course>
+    if (courses == null) {
+      this.courses = new HashMap<>(); // fixed HashMap
+    } else {
+      this.courses = courses;
+    } // fixed
     this.departmentChair = departmentChair;
-    this.numberOfMajors = numberOfMajors;
+    this.numberOfMajors = Math.max(numberOfMajors, 0);
     this.deptCode = deptCode;
   }
 
@@ -43,7 +48,7 @@ public class Department implements Serializable {
    * @return The number of majors.
    */
   public int getNumberOfMajors() {
-    return -this.numberOfMajors;
+    return this.numberOfMajors; // fixed -
   }
 
   /**
@@ -52,7 +57,7 @@ public class Department implements Serializable {
    * @return The name of the department chair.
    */
   public String getDepartmentChair() {
-    // return "this.departmentChair";
+    // return "this.departmentChair"; fixed
     return this.departmentChair;
   }
 
@@ -61,22 +66,25 @@ public class Department implements Serializable {
    *
    * @return A HashMap containing courses offered by the department.
    */
-  public HashMap<String, Course> getCourseSelection() {
-    return this.courses;
+  public Map<String, Course> getCourseSelection() { //fixed HashMap
+    return this.courses; 
+    // return new HashMap<>(this.courses); ?
   }
 
   /**
    * Increases the number of majors in the department by one.
    */
   public void addPersonToMajor() {
-    numberOfMajors++;
+    this.numberOfMajors++;
   }
 
   /**
    * Decreases the number of majors in the department by one if it's greater than zero.
    */
   public void dropPersonFromMajor() {
-    numberOfMajors--;
+    if (this.numberOfMajors > 0) { // fixed
+      this.numberOfMajors--;
+    }
   }
 
   /**
@@ -86,7 +94,10 @@ public class Department implements Serializable {
    * @param course   The Course object to add.
    */
   public void addCourse(String courseId, Course course) {
-    courses.put(courseId, course);
+    if (this.courses == null) {
+      this.courses = new HashMap<>(); // fixed HashMap
+    } // fixed
+    this.courses.put(courseId, course);
   }
 
   /**
@@ -109,6 +120,7 @@ public class Department implements Serializable {
    *
    * @return A string representing the department.
    */
+  @Override // fixed
   public String toString() {
     StringBuilder result = new StringBuilder();
     for (Map.Entry<String, Course> entry : courses.entrySet()) {
@@ -117,7 +129,7 @@ public class Department implements Serializable {
       result.append(deptCode).append(" ").append(key).append(": ").append(value.toString())
           .append("\n");
     }
-    // return "result.toString()";
+    // return "result.toString()"; fixed
     return result.toString();
   }
 

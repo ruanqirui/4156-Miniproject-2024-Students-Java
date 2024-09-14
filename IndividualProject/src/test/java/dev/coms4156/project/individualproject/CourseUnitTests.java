@@ -3,6 +3,8 @@ package dev.coms4156.project.individualproject;
 // import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 // import org.junit.jupiter.api.*;
@@ -41,7 +43,6 @@ public class CourseUnitTests {
 
   // /** The test course instance used for testing. */
   // public static Course testCourse;
-
   @Test
   public void enrollStudentTest() {
     testCourse.setEnrolledStudentCount(249);
@@ -54,6 +55,12 @@ public class CourseUnitTests {
     testCourse.setEnrolledStudentCount(250);
     assertFalse(testCourse.enrollStudent(), "Cannot enroll student when course is full");
     assertEquals(250, testCourse.getEnrolledStudentCount(), "Enrollment count remains the same");
+  }
+
+  @Test
+  public void negativeEnrollmentTest() {
+    testCourse.setEnrolledStudentCount(-10);
+    assertEquals(0, testCourse.getEnrolledStudentCount(), "Enrollmentcount should be positive");
   }
 
   @Test
@@ -97,7 +104,8 @@ public class CourseUnitTests {
   @Test
   public void isCourseNotFullTest() {
     testCourse.setEnrolledStudentCount(100);
-    assertFalse(testCourse.isCourseFull(), "Course should not be full when enrollment is below capacity");
+    assertFalse(testCourse.isCourseFull(), 
+        "Course should not be full when enrollment is below capacity");
   }
 }
 
