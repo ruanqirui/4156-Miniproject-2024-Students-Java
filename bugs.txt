@@ -116,4 +116,14 @@ Bug Fixing with PMD:
     - Bug: LooseCoupling:	Avoid using implementation types like 'HashMap'; use the interface instead
     - Line: 44, 80, 82, 119, 121, 150, 177, 209, 211, 247, 249, 285, 287, 315, 342, 374, 376, 415, 417, 452, 454, 490, 492, 526, 528
     - Fixed: Changed from HashMap to Map
+
+- IndividualProjectApplication.java
+    - Bug: LiteralsFirstInComparisons:	Position literals first in String comparisons
+    - Line: 41
+    - Fixed: Changed arg.equals("setup") to "setup".equals(arg)
+
+    - Bug: LooseCoupling:	Avoid using implementation types like 'HashMap'; use the interface instead
+    - Line: 86, 96
+    - Fixed: Changed from HashMap to Map
+
   
