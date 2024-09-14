@@ -134,7 +134,7 @@ public class RouteControllerUnitTests {
   }
 
   @Test
-  public void testChangeCourseTimeCourseFound() throws Exception {
+  public void testChangeCourseTimeCourse() throws Exception {
     mockMvc.perform(patch("/changeCourseTime?deptCode=COMS&courseCode=3251&time=8:30-10:30"))
         .andExpect(status().isOk())
         .andExpect(content().string(org.hamcrest.Matchers
@@ -201,4 +201,19 @@ public class RouteControllerUnitTests {
             .containsString("Jae Lee is the instructor for the course.")));
   }
 
+  @Test
+  public void testIdentifyDeptChairExists() throws Exception {
+    mockMvc.perform(get("/idDeptChair?deptCode=COMS"))
+          .andExpect(status().isOk())
+          .andExpect(content().string(org.hamcrest.Matchers
+            .containsString("Luca Carloni is the department chair.")));
+  }
+
+  @Test
+  public void testIdentifyDeptChairNotFound() throws Exception {
+    mockMvc.perform(get("/idDeptChair?deptCode=Tea"))
+          .andExpect(status().isNotFound())
+          .andExpect(content().string(org.hamcrest.Matchers
+            .containsString("Department Not Found")));
+  }
 }

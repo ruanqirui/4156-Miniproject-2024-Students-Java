@@ -1,0 +1,119 @@
+Bug Fixing during unit testing:
+- Course.java
+    - Bug:  Using the '.*' form of import should be avoided - java.io.*. [AvoidStarImport]
+    - Line: 3
+    - Fixed: import proper ones
+
+    - Bug: wrong return logic
+    - Func: enrollStudent(), dropStudent(), isCourseFull()
+    - Fixed: add correct if-else statements and returns
+
+    - Bug: wrong return output value
+    - Func: getCourseLocation(), getInstructorName()
+    - Fixed: return this.courseLocation for getCourseLocation and return this.instructorName for getInstructorName
+
+    - Bug: missing comments, wrong variables orders, wrong and missing '.*' imports orders
+    - Fixed: add comments, move to the front, add needed imports and order imports
+
+- Department.java
+    - Bug: null for inputs and neg for varibles
+    - Func: Department() and addCourse()
+    - Fixed: add correct if-else statements and inits logic
+
+    - Bug: wrong return value
+    - Func: getNumberOfMajors()
+    - Fixed: remove "-"
+
+    - Bug: wrong return value 
+    - Func: getDepartmentChair() and toString()
+    - Fixed: remove ""
+
+    - Bug: drop to negative num
+    - Func: dropPersonFromMajor()
+    - Fixed: add correct if-else statements
+
+    - Bug: missing comments, wrong variables orders, wrong and missing '.*' imports orders
+    - Fixed: add comments, move to the front, add needed imports and order imports
+
+- MyFileDatabase.java
+    - Bug: null for inputs and neg for varibles
+    - Func: MyFileDatabase()
+    - Fixed: add correct if-else statements and inits logic
+
+    - Bug: missing object ref
+    - Func: saveContentsToFile()
+    - Fixed: add this.
+
+    - Bug: missing comments, wrong variables orders, wrong and missing '.*' imports orders
+    - Fixed: add comments, move to the front, add needed imports and order imports
+
+- RouteController.java
+    - Bug: null for inputs and neg for varibles
+    - Func: Department() and addCourse()
+    - Fixed: add correct if-else statements and inits logic
+
+    - Bug: wrong return value
+    - Func: retrieveDepartment()
+    - Fixed: return "Department Not Found" with HttpStatus.NOT_FOUND
+             return HttpStatus.OK for found details
+
+    - Bug: wrong return value -departmentMapping.get(deptCode)
+    - Func: getMajorCtFromDept()
+    - Fixed: remove "-"
+
+    - Bug: wrong return value
+    - Func: getMajorCtFromDept()
+    - Fixed: return "Department Not Found" with HttpStatus.NOT_FOUND
+
+    - Bug: wrong return value
+    - Func: handleException()
+    - Fixed: return HttpStatus.INTERNAL_SERVER_ERROR instead of HttpStatus.OK
+    
+    - Bug: wrong return value
+    - Func: findCourseTime()
+    - Fixed: remove "some time " and replace with requestedCourse.getCourseTimeSlot()
+
+    - Bug: missing comments, wrong variables orders, wrong and missing '.*' imports orders
+    - Fixed: add comments, move to the front, add needed imports and order imports
+
+Bug Fixing with PMD:
+- Course.java
+    - Bug: MissingOverride:	The method 'toString()' is missing an @Override annotation.
+    - Line: 100
+    - Fixed: Added @Override
+
+- Department.java
+    - Bug: UnnecessaryImport:	Unused import 'java.io.File'
+    - Line: 5
+    - Fixed: removed the import
+
+    - Bug: LooseCoupling:	Avoid using implementation types like 'HashMap'; use the interface instead
+    - Line: 19, 32, 68
+    - Fixed: Changed from HashMap to Map
+
+    - Bug: MissingOverride:	The method 'toString()' is missing an @Override annotation.
+    - Line: 122
+    - Fixed: Added @Override
+
+- MyFileDatabase.java
+    - Bug: UnnecessaryImport:	Unused import 'java.io.File' and Unused import 'java.io.List'
+    - Line: 5, 12
+    - Fixed: removed the imports
+
+    - Bug: LooseCoupling:	Avoid using implementation types like 'HashMap'; use the interface instead
+    - Line: 45, 54, 87, 111
+    - Fixed: Changed from HashMap to Map
+
+- RouteController.java
+    - Bug: UnnecessaryAnnotationValueElement:	Avoid the use of value in annotations when its the only element
+    - Line: 42, 75, 112, 146, 173, 202, 240, 278, 311, 338, 367, 407, 444, 482, 518
+    - Fixed: Removed "value = "
+
+    - Bug: UseLocaleWithCaseConversions:	When doing a String.toLowerCase()/toUpperCase() call, use a Locale
+    - Line: 47 51
+    - Fixed: Added "Locale.ROOT" and imported java.util.Locale
+    
+    - Bug: LooseCoupling:	Avoid using implementation types like 'HashMap'; use the interface instead
+    - Line: 44, 80, 82, 119, 121, 150, 177, 209, 211, 247, 249, 285, 287, 315, 342, 374, 376, 415, 417, 452, 454, 490, 492, 526, 528
+    - Fixed: Changed from HashMap to Map
+  

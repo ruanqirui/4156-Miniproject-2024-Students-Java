@@ -68,7 +68,6 @@ public class Department implements Serializable {
    */
   public Map<String, Course> getCourseSelection() { //fixed HashMap
     return this.courses; 
-    // return new HashMap<>(this.courses); ?
   }
 
   /**

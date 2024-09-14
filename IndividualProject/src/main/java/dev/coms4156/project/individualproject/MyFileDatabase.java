@@ -28,7 +28,7 @@ public class MyFileDatabase {
     this.filePath = filePath;
     if (flag == 0) {
       this.departmentMapping = deSerializeObjectFromFile();
-      // Ensure we always work with a valid map. fixed
+      // fixed
       if (this.departmentMapping == null) {
         this.departmentMapping = new HashMap<>(); 
       }
