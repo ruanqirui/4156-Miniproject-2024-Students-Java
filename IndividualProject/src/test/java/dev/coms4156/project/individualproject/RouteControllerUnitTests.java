@@ -96,7 +96,7 @@ public class RouteControllerUnitTests {
   public void testRetrieveCourses() throws Exception {
     mockMvc.perform(get("/retrieveCourses?courseCode=3251"))
         .andExpect(status().isOk())
-        .andExpect(content().string(org.hamcrest.Matchers.containsString("!")));
+        .andExpect(content().string(org.hamcrest.Matchers.containsString("Department: COMS")));
   }
 
   @Test
@@ -125,6 +125,20 @@ public class RouteControllerUnitTests {
     mockMvc.perform(patch("/dropStudentFromCourse?deptCode=COMS&courseCode=1000"))
         .andExpect(status().isNotFound())
         .andExpect(content().string(org.hamcrest.Matchers.containsString("Course Not Found")));
+  }
+
+  @Test
+  public void testDropStudentCourse() throws Exception {
+    mockMvc.perform(patch("/dropStudentFromCourse?deptCode=COMS&courseCode=3251"))
+        .andExpect(status().isOk())
+        .andExpect(content().string(org.hamcrest.Matchers.containsString("Student has been dropped.")));
+  }
+
+  @Test
+  public void testEnrollStudentCourse() throws Exception {
+    mockMvc.perform(patch("/enrollStudentInCourse?deptCode=COMS&courseCode=3251"))
+        .andExpect(status().isOk())
+        .andExpect(content().string(org.hamcrest.Matchers.containsString("Student has been enrolled.")));
   }
 
   @Test
