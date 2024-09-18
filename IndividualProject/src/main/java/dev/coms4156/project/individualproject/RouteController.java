@@ -2,6 +2,9 @@ package dev.coms4156.project.individualproject;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 // import org.springframework.http.*;
 // import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -91,6 +94,47 @@ public class RouteController {
         }
       }
       return new ResponseEntity<>("Department Not Found", HttpStatus.NOT_FOUND);
+    } catch (Exception e) {
+      return handleException(e);
+    }
+  }
+
+  /**
+   * Displays the String representation of all the courses with the specified course code to the user 
+   * or displays the proper error message in response to the request.
+   *
+   * @param courseCode A {@code int} representing the course the user wishes
+   *                   to retrieve.
+   *
+   * @return           A {@code ResponseEntity} object containing either representation of all the 
+   *                   courses and an HTTP 200 response or, an appropriate message indicating the
+   *                   proper response.
+   */
+  @GetMapping(value = "/retrieveCourses", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> retrieveCourses(@RequestParam("courseCode") int courseCode) {
+    try {
+      String courseCode_str = Integer.toString(courseCode);
+      Map<String, Department> departmentMapping;
+      departmentMapping = IndividualProjectApplication.myFileDatabase.getDepartmentMapping();
+      List<String> coursesMatch = new ArrayList<>();
+
+      for (Map.Entry<String, Department> dept : departmentMapping.entrySet()) {
+        String deptCode = dept.getKey();
+        Department department = dept.getValue();
+        Map<String, Course> coursesMapping;
+        coursesMapping = department.getCourseSelection();
+        if (coursesMapping.containsKey(courseCode_str)) {
+          Course course = coursesMapping.get(courseCode_str);
+          String courseMatch = "Course Code: " + courseCode_str + ", Course Info: " + course.toString() + ", Department: " + deptCode;
+          coursesMatch.add(courseMatch);
+          }
+      }
+
+      if (!coursesMatch.isEmpty()) {
+        return new ResponseEntity<>(String.join("\n", coursesMatch), HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>("Course Not Found with Code: " + courseCode, HttpStatus.NOT_FOUND);
+      }
     } catch (Exception e) {
       return handleException(e);
     }
