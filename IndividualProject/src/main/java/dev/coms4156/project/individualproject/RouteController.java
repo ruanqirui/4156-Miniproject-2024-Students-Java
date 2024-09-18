@@ -1,10 +1,10 @@
 package dev.coms4156.project.individualproject;
 
+import java.util.ArrayList;
+// import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 // import org.springframework.http.*;
 // import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -100,7 +100,7 @@ public class RouteController {
   }
 
   /**
-   * Displays the String representation of all the courses with the specified course code to the user 
+   * Displays the String representation of all the courses with the specified course code 
    * or displays the proper error message in response to the request.
    *
    * @param courseCode A {@code int} representing the course the user wishes
@@ -113,7 +113,10 @@ public class RouteController {
   @GetMapping(value = "/retrieveCourses", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> retrieveCourses(@RequestParam("courseCode") int courseCode) {
     try {
-      String courseCode_str = Integer.toString(courseCode);
+      if (courseCode <= 0) {
+        return new ResponseEntity<>("Invalid course code.", HttpStatus.BAD_REQUEST);
+      }
+      String codeString = Integer.toString(courseCode);
       Map<String, Department> departmentMapping;
       departmentMapping = IndividualProjectApplication.myFileDatabase.getDepartmentMapping();
       List<String> coursesMatch = new ArrayList<>();
@@ -123,17 +126,19 @@ public class RouteController {
         Department department = dept.getValue();
         Map<String, Course> coursesMapping;
         coursesMapping = department.getCourseSelection();
-        if (coursesMapping.containsKey(courseCode_str)) {
-          Course course = coursesMapping.get(courseCode_str);
-          String courseMatch = "Course Code: " + courseCode_str + ", Course Info: " + course.toString() + ", Department: " + deptCode;
+        if (coursesMapping.containsKey(codeString)) {
+          Course course = coursesMapping.get(codeString);
+          String courseMatch = "Course Code: " + codeString + ", Course Info: " 
+              + course.toString() + ", Department: " + deptCode;
           coursesMatch.add(courseMatch);
-          }
+        }
       }
 
       if (!coursesMatch.isEmpty()) {
         return new ResponseEntity<>(String.join("\n", coursesMatch), HttpStatus.OK);
       } else {
-        return new ResponseEntity<>("Course Not Found with Code: " + courseCode, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Course Not Found with Code: " + courseCode, 
+          HttpStatus.NOT_FOUND);
       }
     } catch (Exception e) {
       return handleException(e);
@@ -438,7 +443,7 @@ public class RouteController {
   }
 
   /**
-   * Attempts to drop a student from the specified course.
+   * Attempts to enroll a student in the specified course.
    *
    * @param deptCode       A {@code String} representing the department.
    *
@@ -452,6 +457,12 @@ public class RouteController {
   public ResponseEntity<?> enrollStudentInCourse(@RequestParam("deptCode") String deptCode, 
         @RequestParam("courseCode") int courseCode) {
     try {
+      if (deptCode == null || deptCode.trim().isEmpty()) {
+        return new ResponseEntity<>("Invalid department code.", HttpStatus.BAD_REQUEST);
+      }
+      if (courseCode <= 0) {
+        return new ResponseEntity<>("Invalid course code.", HttpStatus.BAD_REQUEST);
+      }
       boolean doesCourseExists;
       doesCourseExists = retrieveCourse(deptCode, courseCode).getStatusCode() == HttpStatus.OK;
 
@@ -466,9 +477,13 @@ public class RouteController {
 
         if (!isCourseFull) {
           requestedCourse.enrollStudent();
-          return new ResponseEntity<>("Student has been enrolled. Now the course has:" + requestedCourse.getEnrolledStudentCount()+ "/" + requestedCourse.getEnrollmentCapacity(), HttpStatus.OK);
+          return new ResponseEntity<>("Student has been enrolled. Now the course has:" 
+              + requestedCourse.getEnrolledStudentCount() + "/" 
+              + requestedCourse.getEnrollmentCapacity(), 
+              HttpStatus.OK);
         } else {
-          return new ResponseEntity<>("Student has not been enrolled. The course is full: " , HttpStatus.BAD_REQUEST);
+          return new ResponseEntity<>("Student has not been enrolled. The course is full: ", 
+              HttpStatus.BAD_REQUEST);
         }
       } else {
         return new ResponseEntity<>("Course Not Found", HttpStatus.NOT_FOUND);

@@ -100,6 +100,13 @@ public class RouteControllerUnitTests {
   }
 
   @Test
+  public void testRetrieveBadCourses() throws Exception {
+    mockMvc.perform(get("/retrieveCourses?courseCode=-3251"))
+        .andExpect(status().isBadRequest())
+        .andExpect(content().string(org.hamcrest.Matchers.containsString("Invalid course code.")));
+  }
+
+  @Test
   public void testIsCourseNotFull() throws Exception {
     mockMvc.perform(get("/isCourseFull?deptCode=COMS&courseCode=3251"))
         .andExpect(status().isOk())
@@ -131,14 +138,32 @@ public class RouteControllerUnitTests {
   public void testDropStudentCourse() throws Exception {
     mockMvc.perform(patch("/dropStudentFromCourse?deptCode=COMS&courseCode=3251"))
         .andExpect(status().isOk())
-        .andExpect(content().string(org.hamcrest.Matchers.containsString("Student has been dropped.")));
+        .andExpect(content().string(org.hamcrest.Matchers
+          .containsString("Student has been dropped.")));
   }
 
   @Test
   public void testEnrollStudentCourse() throws Exception {
     mockMvc.perform(patch("/enrollStudentInCourse?deptCode=COMS&courseCode=3251"))
         .andExpect(status().isOk())
-        .andExpect(content().string(org.hamcrest.Matchers.containsString("Student has been enrolled.")));
+        .andExpect(content().string(org.hamcrest.Matchers
+          .containsString("Student has been enrolled.")));
+  }
+
+  @Test
+  public void testEnrollStudentBadCourse() throws Exception {
+    mockMvc.perform(patch("/enrollStudentInCourse?deptCode=COMS&courseCode=-3251"))
+        .andExpect(status().isBadRequest())
+        .andExpect(content().string(org.hamcrest.Matchers
+          .containsString("Invalid course code.")));
+  }
+
+  @Test
+  public void testEnrollStudentCourseBadDept() throws Exception {
+    mockMvc.perform(patch("/enrollStudentInCourse?deptCode= &courseCode=3251"))
+        .andExpect(status().isBadRequest())
+        .andExpect(content().string(org.hamcrest.Matchers
+          .containsString("Invalid department code.")));
   }
 
   @Test
