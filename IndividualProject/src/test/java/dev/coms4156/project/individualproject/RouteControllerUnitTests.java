@@ -8,7 +8,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -88,6 +90,13 @@ public class RouteControllerUnitTests {
     mockMvc.perform(get("/retrieveCourse?deptCode=COMS&courseCode=3251"))
         .andExpect(status().isOk())
         .andExpect(content().string(org.hamcrest.Matchers.containsString("Tony Dear")));
+  }
+
+  @Test
+  public void testRetrieveCourses() throws Exception {
+    mockMvc.perform(get("/retrieveCourses?courseCode=3251"))
+        .andExpect(status().isOk())
+        .andExpect(content().string(org.hamcrest.Matchers.containsString("!")));
   }
 
   @Test
